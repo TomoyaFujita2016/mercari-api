@@ -1,4 +1,6 @@
 # mercari-api
+Python package to search for items in [Mercari](https://www.mercari.com/jp/search/).
+
 ## Installation
 - poetry
 ```
