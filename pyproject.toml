@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "mercari-api"
+version = "0.1.0"
+description = ""
+authors = ["TomoyaFujita2016 <fujita.t.2016c@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+web-adapter = {git = "https://github.com/TomoyaFujita2016/web-adapter.git", rev = "main"}
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
