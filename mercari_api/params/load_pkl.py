@@ -17,3 +17,28 @@ SaleStatus = load_pkl(pkl_dir + "sale_status.pkl")
 ShippingMethod = load_pkl(pkl_dir + "shipping_method.pkl")
 ShippingPayer = load_pkl(pkl_dir + "shipping_payers.pkl")
 Color = load_pkl(pkl_dir + "colors.pkl")
+
+if __name__ == "__main__":
+    from pprint import pprint
+
+    print("-----Brand------")
+    for key in list(Brand.keys())[:5]:
+        print("{", f"'{key}': {Brand[key]}", "}")
+
+    print("-----Category------")
+    pprint(Category["メンズ"])
+
+    print("-----ItemCondition------")
+    pprint(ItemCondition)
+
+    print("-----SaleStatus------")
+    pprint(SaleStatus)
+
+    print("-----ShippingMethod------")
+    pprint(ShippingMethod)
+
+    print("-----ShippingPayer------")
+    pprint(ShippingPayer)
+
+    print("-----Color------")
+    pprint(Color)

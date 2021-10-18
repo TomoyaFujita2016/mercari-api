@@ -1,5 +1,5 @@
 import re
-from typing import Optional
+from typing import List, Optional
 
 from web_adapter import WebAdapter
 from web_adapter.materials import URL, ElementHint, Type
@@ -22,9 +22,9 @@ class MercariAPI:
         brand_id: Optional[int] = None,
         price_min: Optional[int] = None,
         price_max: Optional[int] = None,
-        item_condition_id: Optional[int] = None,
+        item_condition_id: Optional[List[int]] = None,
         shipping_payer_id: Optional[int] = None,
-        color_id: Optional[int] = None,
+        color_id: Optional[List[int]] = None,
         shipping_method: Optional[str] = None,
         sale_status: Optional[str] = None,
         limit: Optional[int] = None,
@@ -59,16 +59,18 @@ class MercariAPI:
             query += f"&price_max={price_max}"
 
         # item_condition
-        if item_condition_id is not None:
-            query += f"&item_condition_id={item_condition_id}"
+        if item_condition_id not in [None, []]:
+            item_condition_id = [str(item) for item in item_condition_id]
+            query += f"&item_condition_id={','.join(item_condition_id)}"
 
         # shipping_payer
         if shipping_payer_id is not None:
             query += f"&shipping_payer_id={shipping_payer_id}"
 
         # color
-        if color_id is not None:
-            query += f"&color_id={color_id}"
+        if color_id not in [None, []]:
+            color_id = [str(item) for item in color_id]
+            query += f"&color_id={','.join(color_id)}"
 
         # shipping_method
         if shipping_method is not None:
@@ -94,9 +96,9 @@ class MercariAPI:
         brand_id: Optional[int] = None,
         price_min: Optional[int] = None,
         price_max: Optional[int] = None,
-        item_condition_id: Optional[int] = None,
+        item_condition_id: Optional[List[int]] = None,
         shipping_payer_id: Optional[int] = None,
-        color_id: Optional[int] = None,
+        color_id: Optional[List[int]] = None,
         shipping_method: Optional[str] = None,
         sale_status: Optional[str] = None,
         limit: Optional[int] = None,
