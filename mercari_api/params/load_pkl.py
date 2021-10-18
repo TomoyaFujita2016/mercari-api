@@ -10,10 +10,10 @@ def load_pkl(path: str):
 
 pkl_dir = os.path.dirname(os.path.abspath(__file__)) + "/pkl/"
 
-brand = load_pkl(pkl_dir + "brands.pkl")
-category = load_pkl(pkl_dir + "categories.pkl")
-item_condition = load_pkl(pkl_dir + "item_conditions.pkl")
-sale_status = load_pkl(pkl_dir + "sale_status.pkl")
-shipping_method = load_pkl(pkl_dir + "shipping_method.pkl")
-shipping_payer = load_pkl(pkl_dir + "shipping_payers.pkl")
-color = load_pkl(pkl_dir + "colors.pkl")
+Brand = load_pkl(pkl_dir + "brands.pkl")
+Category = load_pkl(pkl_dir + "categories.pkl")
+ItemCondition = load_pkl(pkl_dir + "item_conditions.pkl")
+SaleStatus = load_pkl(pkl_dir + "sale_status.pkl")
+ShippingMethod = load_pkl(pkl_dir + "shipping_method.pkl")
+ShippingPayer = load_pkl(pkl_dir + "shipping_payers.pkl")
+Color = load_pkl(pkl_dir + "colors.pkl")
