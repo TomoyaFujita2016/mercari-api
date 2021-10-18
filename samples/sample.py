@@ -28,7 +28,7 @@ params = {
     "price_max": 150000,
     "item_condition_id": [ItemCondition["新品、未使用"], ItemCondition["目立った傷や汚れなし"]],
     "shipping_payer_id": ShippingPayer["送料込み(出品者負担)"],
-    "color_id": Color["ブラック系"],
+    "color_id": [Color["グレイ系"], Color["ブラック系"]],
     "shipping_method": ShippingMethod["匿名配送"],
     "sale_status": SaleStatus["販売中"],
     "limit": 5,

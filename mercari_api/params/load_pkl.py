@@ -21,24 +21,43 @@ Color = load_pkl(pkl_dir + "colors.pkl")
 if __name__ == "__main__":
     from pprint import pprint
 
-    print("-----Brand------")
-    for key in list(Brand.keys())[:5]:
-        print("{", f"'{key}': {Brand[key]}", "}")
+    # Brand = load_pkl(pkl_dir + "brands.pkl")
+    # pprint(Brand)
 
-    print("-----Category------")
-    pprint(Category["メンズ"])
+    #Category = load_pkl(pkl_dir + "categories.pkl")
+    #pprint(Category)
 
-    print("-----ItemCondition------")
-    pprint(ItemCondition)
+    #ItemCondition = load_pkl(pkl_dir + "item_conditions.pkl")
+    #pprint(ItemCondition)
 
-    print("-----SaleStatus------")
-    pprint(SaleStatus)
+    #SaleStatus = load_pkl(pkl_dir + "sale_status.pkl")
+    #pprint(SaleStatus)
 
-    print("-----ShippingMethod------")
-    pprint(ShippingMethod)
-
-    print("-----ShippingPayer------")
-    pprint(ShippingPayer)
-
-    print("-----Color------")
+    #ShippingMethod = load_pkl(pkl_dir + "shipping_method.pkl")
+    #pprint(ShippingMethod)
+    # ShippingPayer = load_pkl(pkl_dir + "shipping_payers.pkl")
+    #pprint(ShippingPayer)
+    Color = load_pkl(pkl_dir + "colors.pkl")
     pprint(Color)
+
+    # print("-----Brand------")
+    # for key in list(Brand.keys())[:5]:
+    #    print("{", f"'{key}': {Brand[key]}", "}")
+
+    # print("-----Category------")
+    # pprint(Category["メンズ"])
+
+    # print("-----ItemCondition------")
+    # pprint(ItemCondition)
+
+    # print("-----SaleStatus------")
+    # pprint(SaleStatus)
+
+    # print("-----ShippingMethod------")
+    # pprint(ShippingMethod)
+
+    # print("-----ShippingPayer------")
+    # pprint(ShippingPayer)
+
+    # print("-----Color------")
+    # pprint(Color)
