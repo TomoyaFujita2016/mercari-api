@@ -120,7 +120,7 @@ class MercariAPI:
             limit=limit,
         )
         url = MercariAPI.BASE_URL.fnew(query=query)
-        print(url)
+        #print(url)
         self.web_adapter.get_page(url)
         return self.scrape_item_info()
 
