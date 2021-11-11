@@ -197,9 +197,13 @@ class MercariAPI:
     def search_from_user_id(
         self,
         user_id: str,
-        price_min: Optional[int] = -1,
-        price_max: Optional[int] = 10e12, #1兆
+        price_min: Optional[int] = None,
+        price_max: Optional[int] = None,
     ):
+        if price_max is None:
+            price_max = 10e12  # 1兆
+        if price_min is None:
+            price_min = -1
         url = MercariAPI.USER_URL.fnew(user_id=user_id)
         self.web_adapter.get_page(url)
         items = self.scrape_item_info(on_sale_only=True)
