@@ -7,7 +7,21 @@ from web_adapter.materials import URL, ElementHint, Type
 
 class MercariAPI:
     BASE_URL = URL("https://jp.mercari.com/search{query}")
+    ITEM_URL = URL("https://jp.mercari.com/item/{item_id}")
+    USER_URL = URL("https://jp.mercari.com/user/profile/{user_id}")
     EH_ITEM = ElementHint("ul > li > a > mer-item-thumbnail", Type.CSS_SELECTOR)
+    EH_ITEM_ONSALE = ElementHint(
+        "ul > li > a > mer-item-thumbnail:not([sticker])", Type.CSS_SELECTOR
+    )
+    EH_LIKE = ElementHint(
+        'mer-icon-button[data-testid="icon-heart-button"]', Type.CSS_SELECTOR
+    )
+    EH_COMMENT = ElementHint(
+        'mer-tooltip[text="コメント"] > mer-icon-button', Type.CSS_SELECTOR
+    )
+    EH_USERLINK = ElementHint(
+        'a[data-location="item:seller_info:link:go_user_profile"]', Type.CSS_SELECTOR
+    )
 
     def __init__(self, is_headless=True):
         self.web_adapter = WebAdapter(is_headless=is_headless)
@@ -120,16 +134,20 @@ class MercariAPI:
             limit=limit,
         )
         url = MercariAPI.BASE_URL.fnew(query=query)
-        #print(url)
         self.web_adapter.get_page(url)
         return self.scrape_item_info()
 
-    def scrape_item_info(self):
+    def scrape_item_info(self, on_sale_only=False):
         """
         Execute this after self.search()!
         """
+        if on_sale_only:
+            eh = MercariAPI.EH_ITEM_ONSALE
+        else:
+            eh = MercariAPI.EH_ITEM
+
         item_info = []
-        items = self.web_adapter.find_elements(MercariAPI.EH_ITEM)
+        items = self.web_adapter.find_elements(eh)
         for item in items:
             item_info.append(
                 {
@@ -142,3 +160,52 @@ class MercariAPI:
                 }
             )
         return item_info
+
+    def get_item_detail(self, item_id: str):
+        url = MercariAPI.ITEM_URL.fnew(item_id=item_id)
+        self.web_adapter.get_page(url)
+        resp = self.scrape_item_detail()
+        resp["item_id"] = item_id
+        return resp
+
+    def scrape_item_detail(self):
+        like = 0
+        like_element = self.web_adapter.find_element(MercariAPI.EH_LIKE)
+        if like_element is not None:
+            try:
+                like = int(like_element.get_attribute("label"))
+            except Exception:
+                like = 0
+
+        comment = 0
+        comment_element = self.web_adapter.find_element(MercariAPI.EH_COMMENT)
+        if comment_element is not None:
+            try:
+                comment = int(comment_element.get_attribute("label"))
+            except Exception:
+                comment = 0
+
+        user_id = ""
+        userid_element = self.web_adapter.find_element(MercariAPI.EH_USERLINK)
+        if userid_element is not None:
+            userurl = userid_element.get_attribute("href")
+            user_id = re.search(r"/user/profile/(?P<user_id>[0-9]+)", userurl).group(
+                "user_id"
+            )
+        return {"like": like, "comment": comment, "user_id": user_id}
+
+    def search_from_user_id(
+        self,
+        user_id: str,
+        price_min: Optional[int] = -1,
+        price_max: Optional[int] = 10e12, #1兆
+    ):
+        url = MercariAPI.USER_URL.fnew(user_id=user_id)
+        self.web_adapter.get_page(url)
+        items = self.scrape_item_info(on_sale_only=True)
+
+        filtered_items = []
+        for item in items:
+            if price_min <= int(item["price"]) <= price_max:
+                filtered_items.append(item)
+        return filtered_items
